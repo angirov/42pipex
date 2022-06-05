@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include "libft.h"
 
 int	ft_check_input(int argc)
 {
@@ -15,23 +16,78 @@ int	ft_check_input(int argc)
 	exit(1);
 }
 
+char	**ft_make_newargv(char *arg_string)
+{
+	int		newargc;
+	char	*newstring;
+	char	**newargv;
+
+	newargc = ft_toknum(arg_string, ' ');
+	newstring = ft_strjoin(arg_string, " NULL");
+	newargv = ft_split(newstring, ' ');
+	free(newstring);
+	free(newargv[newargc]);
+	newargv[newargc] = NULL;
+	return (newargv);
+}
+
+/* Do not forget that some of double char arrays may have a the last slot pointing to NULL */
+void	ft_free_double_chararr(char **arr, int	n)
+{
+	int i;
+
+	i = 0;
+	while (i++ < n)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+
+
+void	ft_print_double_chararr(char **arr, int	n)
+{
+	int i;
+
+	i = 0;
+	while (i < n)
+		printf("%s\n", arr[i++]);
+}
+
+
 int	main(int argc, char **argv)
 {
 	int		pid;
 	int		pp[2];
 	int		fd1;
 	int		fd2;
-	char	*cmd1;
-	char	*cmd2;
+	// char	*cmd1;
+	// char	*cmd2;
 	char	*file1;
 	char	*file2;
+	char	**argv1;
+	char	**argv2;
+	// int		argc1;
+	// int		argc2;
 
 	ft_check_input(argc); /////////////////////////////////////
 	
 	file1 = argv[1];
-	cmd1 = argv[2];
-	cmd2 = argv[3];
 	file2 = argv[4];
+
+	// argc1 = ft_toknum(argv[2], ' ');
+	// argc2 = ft_toknum(argv[3], ' ');
+	// argv1 = ft_split(argv[2], ' ');
+	// argv2 = ft_split(argv[3], ' ');
+	// cmd1 = argv1[0];
+	// cmd2 = argv2[0];
+
+	argv1 = ft_make_newargv(argv[2]);
+	argv2 = ft_make_newargv(argv[3]);
+	ft_print_double_chararr(argv1, ft_toknum(argv[2], ' ') + 1);
+	ft_print_double_chararr(argv2, ft_toknum(argv[2], ' ') + 1);
 
 	if (pipe(pp) == -1)
 		printf("Failed to pipe.\n");
@@ -55,7 +111,8 @@ int	main(int argc, char **argv)
 		close(fd1);
 		close(fd2);
 		close(pp[0]);
-		if (execl(cmd1, cmd1, NULL) == -1) {
+		// if (execl(cmd1, cmd1, NULL) == -1) {
+		if (execve(argv1[0], argv1, NULL) == -1) {
 			printf("Child exec failed.\n"); /////////////////////////////////////////
 		}
 	}
@@ -69,7 +126,8 @@ int	main(int argc, char **argv)
 		wait(NULL);
 		dup2(fd2, STDOUT_FILENO);
 		close(fd2);
-		if (execl(cmd2, cmd2, NULL) == -1) {
+		// if (execl(cmd2, cmd2, NULL) == -1) {
+		if (execve(argv2[0], argv2, NULL) == -1) {
 			printf("Parent exec failed.\n"); /////////////////////////////////////////
 		}
 
@@ -77,6 +135,10 @@ int	main(int argc, char **argv)
 		// read(0, &str, 1000);
 		// // write(1, &str, 1000);
 		// printf("%s\n", str);
+
+		// free newargv < ft_split
+
+
 	}
 	return 0;
 }

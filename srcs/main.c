@@ -119,6 +119,10 @@ void	ft_close_fds(int cmd_i, t_pipex *pipex)
 	}
 }
 
+// int	ft_set_stdin(int i, t_pipex pipex)
+// int	ft_set_stdout(int i, t_pipex pipex)
+
+
 int	main(int argc, char **argv)
 {
 	int		pid;
@@ -143,6 +147,8 @@ int	main(int argc, char **argv)
 			// 	sleep(2);
 			printf("Hello from child %d\n", i);
 			ft_print_double_chararr(pipex.newargvs[i], ft_toknum(argv[i + 2] + 1, ' '));
+			// int	ft_set_stdin(int i, t_pipex pipex)
+			// int	ft_set_stdout(int i, t_pipex pipex)
 			if (i == 0)
 				dup2(pipex.fd1, STDIN_FILENO);
 			else

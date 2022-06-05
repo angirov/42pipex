@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	char	*file1;
 	char	*file2;
 
-	// ft_check_input(argc); /////////////////////////////////////
+	ft_check_input(argc); /////////////////////////////////////
 	
 	file1 = argv[1];
 	cmd1 = argv[2];

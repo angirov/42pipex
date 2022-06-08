@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 19:20:30 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:53:09 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_child(int cmd_i, t_pipex *pipex)
 	dup2(ft_set_stdout(cmd_i, pipex), STDOUT_FILENO);
 	ft_close_all_fds(pipex);
 	if (execve(pipex->newargvs[cmd_i][0], pipex->newargvs[cmd_i], NULL) == -1)
-		ft_exit(300 + 1, pipex); /////////////////////////////////////////
+		ft_exit(500 + 1, pipex);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -62,10 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		pid = fork();
 		if (pid == -1)
-		{
-			printf("Can't fork process: %s\n", strerror(errno)); /////////////////////////////////////////
-			return 1; /////////////////////////////////////////
-		}
+			ft_exit(400 + 1, &pipex);
 		if (pid == 0)
 			ft_child(cmd_i, &pipex);
 		cmd_i++;

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 19:53:09 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:47:04 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_child(cmd_i, &pipex);
 		cmd_i++;
 	}
+	wait(NULL);
 	ft_clean_pipex(&pipex);
 	return 0;
 }

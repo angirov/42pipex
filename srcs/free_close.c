@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 19:17:51 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 20:25:26 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit(int num, t_pipex *pipex)
 {
-	perror(strerror(num));
+	perror(ft_itoa(num));
 	ft_clean_pipex(pipex);
 	exit(errno);
 }

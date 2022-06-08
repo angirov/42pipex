@@ -3,58 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 20:47:04 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:28:09 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h" 
 
-// void	ft_print_double_chararr(char **arr, int	n)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i < n)
-// 		printf("%s\n", arr[i++]);
-// }
-
-/*	A command reads from the pipe[0] of preceding index
-	if it is not the FIRST one which reads from file1 (fd1) */
-int	ft_set_stdin(int cmd_i, t_pipex *pipex)
+void	ft_init_pipex(t_pipex *pipex)
 {
-	if (cmd_i == 0)
-		return (pipex->fd1);
-	else
-		return (pipex->pipes[cmd_i-1][0]);
+	pipex->cmd_num = 0;
+	pipex->pipe_num = 0;
+	pipex->fd1 = -1;
+	pipex->fd2 = -1;
+	pipex->paths = NULL;
+	pipex->pipes = NULL;
+	pipex->newargvs = NULL;
 }
 
-/*	A command writes to the pipe[1] of the same index
-	if it is not the LAST one which writes to file2 (fd2) */
-int	ft_set_stdout(int cmd_i, t_pipex *pipex)
+void	ft_make_pipex(int argc, char **argv, char **envp, t_pipex *pipex)
 {
-	if (cmd_i == pipex->cmd_num - 1)
-		return (pipex->fd2);
-	else
-		return (pipex->pipes[cmd_i][1]);
-}
-
-void	ft_child(int cmd_i, t_pipex *pipex)
-{
-	dup2(ft_set_stdin(cmd_i, pipex), STDIN_FILENO);
-	dup2(ft_set_stdout(cmd_i, pipex), STDOUT_FILENO);
-	ft_close_all_fds(pipex);
-	if (execve(pipex->newargvs[cmd_i][0], pipex->newargvs[cmd_i], NULL) == -1)
-		ft_exit(500 + 1, pipex);
+	if (argc != 5)
+		write(2, "Error: wrong input format\n", 26);
+	ft_init_pipex(pipex);
+	pipex->cmd_num = argc - 3;
+	pipex->pipe_num = pipex->cmd_num - 1;
+	pipex->fd1 = open(argv[1], O_RDONLY);
+	if (pipex->fd1 < 0)
+		ft_exit(100 + 1, pipex);
+	pipex->fd2 = open(argv[argc - 1], O_CREAT | O_WRONLY, 0777);
+	if (pipex->fd2 < 0)
+		ft_exit(100 + 2, pipex);
+	ft_make_paths(envp, pipex);
+	ft_make_newarvs(argv, pipex);
+	ft_make_pipes(pipex);
+	ft_find_cmds(pipex);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	int		pid;
 	t_pipex	pipex;
-	int cmd_i;
+	int		cmd_i;
 
 	ft_make_pipex(argc, argv, envp, &pipex);
 	cmd_i = 0;
@@ -69,5 +61,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	wait(NULL);
 	ft_clean_pipex(&pipex);
-	return 0;
+	return (0);
 }

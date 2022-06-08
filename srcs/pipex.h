@@ -6,15 +6,14 @@
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:55:47 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 19:19:48 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:30:12 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
-#include <stdio.h> ////////////////////////////////////////////////////////////////////////////////////////
-
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
@@ -24,7 +23,7 @@
 # include <sys/wait.h>
 # include "libft.h"
 
-typedef	struct s_pipex
+typedef struct s_pipex
 {
 	int		cmd_num;
 	int		pipe_num;
@@ -50,5 +49,10 @@ void	ft_make_pipes(t_pipex *pipex);
 void	ft_make_newarvs(char **argv, t_pipex *pipex);
 void	ft_find_cmds(t_pipex *pipex);
 int		ft_find_path(int cmd_i, t_pipex *pipex);
+
+/* child.h */
+int		ft_set_stdin(int cmd_i, t_pipex *pipex);
+int		ft_set_stdout(int cmd_i, t_pipex *pipex);
+void	ft_child(int cmd_i, t_pipex *pipex);
 
 #endif

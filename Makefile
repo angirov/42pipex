@@ -3,7 +3,8 @@ NAME = pipex
 SRCS_DIR = srcs/
 SRCS_FILES = 	main.c \
 				init_pipex.c \
-				free_close.c
+				free_close.c \
+				child.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 

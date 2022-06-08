@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 20:25:26 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:21:16 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	ft_clean_pipex(t_pipex *pipex)
 
 void	ft_close_all_fds(t_pipex *pipex)
 {
-	int j;
-	j = 0;
+	int	j;
 
+	j = 0;
 	close(pipex->fd1);
 	close(pipex->fd2);
 	while (j < pipex->pipe_num && pipex->pipes)

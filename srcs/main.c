@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:14:23 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:40:11 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_set_stdout(int cmd_i, t_pipex *pipex)
 		return (pipex->pipes[cmd_i][1]);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **env)
 {
 	int		pid;
 	t_pipex	pipex;
@@ -67,7 +67,6 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-	ft_close_all_fds(&pipex);
-	// free all
+	ft_clean_pipex(&pipex);
 	return 0;
 }

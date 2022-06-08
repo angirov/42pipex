@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 13:43:27 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:00:29 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_clean_pipex(t_pipex *pipex)
 {
 	ft_close_all_fds(pipex);
-	ft_free_split_nullterm(pipex->paths);
+	ft_free_split(pipex->paths);
 	ft_free_pipes(pipex);
 	ft_free_newargvs(pipex);
 }
@@ -65,7 +65,7 @@ void	ft_free_newargvs(t_pipex *pipex)
 	i = 0;
 	while (i < pipex->cmd_num)
 	{
-		ft_free_split_nullterm(pipex->newargvs[i]);
+		ft_free_split(pipex->newargvs[i]);
 		i++;
 	}
 	free(pipex->newargvs);

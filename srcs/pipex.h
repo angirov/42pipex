@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:55:47 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 13:34:59 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:29:01 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int		ft_check_input(int argc);
 void	ft_make_paths(char **envp, t_pipex *pipex);
 void	ft_make_pipes(t_pipex *pipex);
 void	ft_make_newarvs(char **argv, t_pipex *pipex);
+void	ft_find_cmds(t_pipex *pipex);
+int		ft_find_path(int cmd_i, t_pipex *pipex);
 
 #endif

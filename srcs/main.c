@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 12:27:36 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:37:32 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,24 @@ int	ft_set_stdout(int cmd_i, t_pipex *pipex)
 		return (pipex->pipes[cmd_i][1]);
 }
 
-int	main(int argc, char **argv)//, char **env)
+void	ft_child(int cmd_i, t_pipex *pipex)
+{
+	dup2(ft_set_stdin(cmd_i, pipex), STDIN_FILENO);
+	dup2(ft_set_stdout(cmd_i, pipex), STDOUT_FILENO);
+	ft_close_all_fds(pipex);
+	if (execve(pipex->newargvs[cmd_i][0], pipex->newargvs[cmd_i], NULL) == -1)
+		printf("Child %d exec failed.\n", cmd_i); /////////////////////////////////////////
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	int		pid;
 	t_pipex	pipex;
-	int i;
+	int cmd_i;
 
-	ft_init_pipex(argc, argv, &pipex);
-	i = 0;
-	while (i < pipex.cmd_num)
+	ft_make_pipex(argc, argv, envp, &pipex);
+	cmd_i = 0;
+	while (cmd_i < pipex.cmd_num)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -58,14 +67,8 @@ int	main(int argc, char **argv)//, char **env)
 			return 1; /////////////////////////////////////////
 		}
 		if (pid == 0)
-		{
-			dup2(ft_set_stdin(i, &pipex), STDIN_FILENO);
-			dup2(ft_set_stdout(i, &pipex), STDOUT_FILENO);
-			ft_close_all_fds(&pipex);
-			if (execve(pipex.newargvs[i][0], pipex.newargvs[i], NULL) == -1)
-				printf("Child %d exec failed.\n", i); /////////////////////////////////////////
-		}
-		i++;
+			ft_child(cmd_i, &pipex);
+		cmd_i++;
 	}
 	ft_clean_pipex(&pipex);
 	return 0;

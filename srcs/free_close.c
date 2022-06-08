@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 12:31:15 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 13:43:27 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_clean_pipex(t_pipex *pipex)
 {
 	ft_close_all_fds(pipex);
+	ft_free_split_nullterm(pipex->paths);
 	ft_free_pipes(pipex);
 	ft_free_newargvs(pipex);
 }
@@ -42,7 +43,7 @@ void	ft_close_all_fds(t_pipex *pipex)
 
 /*	This function just mirrors ft_init_pipes */
 
-void ft_free_pipes(t_pipex *pipex)
+void	ft_free_pipes(t_pipex *pipex)
 {
 	int	i;
 
@@ -64,7 +65,7 @@ void	ft_free_newargvs(t_pipex *pipex)
 	i = 0;
 	while (i < pipex->cmd_num)
 	{
-		ft_free_newargv(pipex->newargvs[i]);
+		ft_free_split_nullterm(pipex->newargvs[i]);
 		i++;
 	}
 	free(pipex->newargvs);
@@ -74,22 +75,22 @@ void	ft_free_newargvs(t_pipex *pipex)
 	use of the fact that they were inited with
 	a NULL at the end in ft_make_newargv */
 
-void	ft_free_newargv(char **arr)
-{
-	int i;
+// void	ft_free_split_nullterm(char **arr)
+// {
+// 	int i;
 
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
+// 	i = 0;
+// 	while (arr[i])
+// 	{
+// 		free(arr[i]);
+// 		i++;
+// 	}
+// 	free(arr);
+// }
 
 /*	Do not forget that some of double char arrays 
 	may have a the last slot pointing to NULL */
-// void	ft_free_double_chararr(char **arr, int	n)
+// void	ft_free_split(char **arr, int n)
 // {
 // 	int i;
 

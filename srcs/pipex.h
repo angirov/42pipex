@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:55:47 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:14:38 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:27:10 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ typedef	struct s_pipex
 }	t_pipex;
 
 /* free_close.c */
-void	ft_free_double_chararr(char **arr, int	n);
+void	ft_clean_pipex(t_pipex *pipex);
 void	ft_close_all_fds(t_pipex *pipex);
+void ft_free_pipes(t_pipex *pipex);
+void	ft_free_newargvs(t_pipex *pipex);
+void	ft_free_newargv(char **arr);
 
 /* init_pipex.c */
 int		ft_check_input(int argc);

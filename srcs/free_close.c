@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 11:25:25 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:31:15 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void ft_free_pipes(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	int pipe_res;
 	while (i < pipex->pipe_num)
 	{
 		free(pipex->pipes[i]);

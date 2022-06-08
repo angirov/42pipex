@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:55:47 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 16:29:01 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:19:48 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ typedef	struct s_pipex
 }	t_pipex;
 
 /* free_close.c */
+void	ft_exit(int num, t_pipex *pipex);
 void	ft_clean_pipex(t_pipex *pipex);
 void	ft_close_all_fds(t_pipex *pipex);
 void	ft_free_pipes(t_pipex *pipex);
 void	ft_free_newargvs(t_pipex *pipex);
-void	ft_free_newargv(char **arr);
 
 /* init_pipex.c */
 void	ft_make_pipex(int argc, char **argv, char **envp, t_pipex *pipex);

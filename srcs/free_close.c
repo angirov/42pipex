@@ -3,19 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 17:00:29 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:17:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h" 
 
+void	ft_exit(int num, t_pipex *pipex)
+{
+	perror(strerror(num));
+	ft_clean_pipex(pipex);
+	exit(errno);
+}
+
 void	ft_clean_pipex(t_pipex *pipex)
 {
 	ft_close_all_fds(pipex);
-	ft_free_split(pipex->paths);
+	if (pipex->paths)
+		ft_free_split(pipex->paths);
 	ft_free_pipes(pipex);
 	ft_free_newargvs(pipex);
 }
@@ -31,14 +39,15 @@ void	ft_close_all_fds(t_pipex *pipex)
 {
 	int j;
 	j = 0;
-	while (j < pipex->pipe_num)
+
+	close(pipex->fd1);
+	close(pipex->fd2);
+	while (j < pipex->pipe_num && pipex->pipes)
 	{
 		close(pipex->pipes[j][0]);
 		close(pipex->pipes[j][1]);
 		j++;
 	}
-	close(pipex->fd1);
-	close(pipex->fd2);
 }
 
 /*	This function just mirrors ft_init_pipes */
@@ -48,12 +57,15 @@ void	ft_free_pipes(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	while (i < pipex->pipe_num)
+	if (pipex->pipes)
 	{
-		free(pipex->pipes[i]);
-		i++;
+		while (i < pipex->pipe_num)
+		{
+			free(pipex->pipes[i]);
+			i++;
+		}
+		free(pipex->pipes);
 	}
-	free(pipex->pipes);
 }
 
 /*	This function just mirrors ft_init_newarvs */
@@ -63,12 +75,15 @@ void	ft_free_newargvs(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	while (i < pipex->cmd_num)
+	if (pipex->newargvs)
 	{
-		ft_free_split(pipex->newargvs[i]);
-		i++;
+		while (i < pipex->cmd_num)
+		{
+			ft_free_split(pipex->newargvs[i]);
+			i++;
+		}
+		free(pipex->newargvs);
 	}
-	free(pipex->newargvs);
 }
 
 /*	This function frees double char arrays making

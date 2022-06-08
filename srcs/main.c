@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 13:37:32 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/08 19:20:30 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h" 
 
-void	ft_print_double_chararr(char **arr, int	n)
-{
-	int i;
+// void	ft_print_double_chararr(char **arr, int	n)
+// {
+// 	int i;
 
-	i = 0;
-	while (i < n)
-		printf("%s\n", arr[i++]);
-}
+// 	i = 0;
+// 	while (i < n)
+// 		printf("%s\n", arr[i++]);
+// }
 
 /*	A command reads from the pipe[0] of preceding index
 	if it is not the FIRST one which reads from file1 (fd1) */
@@ -47,7 +47,7 @@ void	ft_child(int cmd_i, t_pipex *pipex)
 	dup2(ft_set_stdout(cmd_i, pipex), STDOUT_FILENO);
 	ft_close_all_fds(pipex);
 	if (execve(pipex->newargvs[cmd_i][0], pipex->newargvs[cmd_i], NULL) == -1)
-		printf("Child %d exec failed.\n", cmd_i); /////////////////////////////////////////
+		ft_exit(300 + 1, pipex); /////////////////////////////////////////
 }
 
 int	main(int argc, char **argv, char **envp)

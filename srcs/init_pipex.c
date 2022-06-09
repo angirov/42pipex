@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:00:36 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 21:27:02 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:37:59 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_make_paths(char **envp, t_pipex *pipex)
 {
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
+	if (ft_strncmp("PATH", *envp, 4))
+		ft_exit(50, pipex);
 	pipex->paths = ft_split(*envp + 5, ':');
 }
 

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:00:36 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/09 19:37:59 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:36:42 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,6 @@ void	ft_make_pipes(t_pipex *pipex)
 		pipe_res = pipe(pipex->pipes[i]);
 		if (pipe_res == -1)
 			ft_exit(200 + i, pipex);
-		i++;
-	}
-}
-
-void	ft_find_cmds(t_pipex *pipex)
-{
-	int		i;
-
-	i = 0;
-	while (i < pipex->cmd_num)
-	{
-		if (!ft_find_path(i, pipex))
-			ft_exit(300 + i, pipex);
 		i++;
 	}
 }

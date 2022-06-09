@@ -1,6 +1,10 @@
 NAME = pipex
 
 SRCS_DIR = srcs/
+HEADERS = $(SRCS_DIR)pipex.h
+
+# ========== mandatory ===========
+
 SRCS_FILES = 	main.c \
 				init_pipex.c \
 				free_close.c \
@@ -10,7 +14,16 @@ SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 OBJ = ${SRCS:.c=.o}
 
-HEADERS = $(SRCS_DIR)pipex.h
+# ==========   bonus   ===========
+
+SRCS_FILES_BONUS = 	main_bonus.c \
+				init_pipex.c \
+				free_close.c \
+				child.c
+
+SRCS_BONUS = $(addprefix $(SRCS_DIR), $(SRCS_FILES_BONUS))
+
+OBJ_BONUS = ${SRCS_BONUS:.c=.o}
 
 # ========== libraries ==========
 LIB_DIR = libs
@@ -31,6 +44,9 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(INCLUDES_LOCAL) $(ALL_LIBS) -o $(NAME)
 
+bonus: $(OBJ_BONUS)
+	$(CC) $(OBJ_BONUS) $(INCLUDES_LOCAL) $(ALL_LIBS) -o $(NAME)
+
 %.o: %.c $(HEADERS) makelibs
 	$(CC) $(CFLAGS) $(INCLUDES_LOCAL) -c $< -o $@ 
 
@@ -38,10 +54,10 @@ makelibs:
 	make bonus -C $(LIBFT_DIR)
 
 clean: cleanlibs
-	rm $(OBJ)
+	rm -f $(OBJ) $(OBJ_BONUS)
 
-fclean: fcleanlibs
-	rm $(OBJ) $(NAME)
+fclean: fcleanlibs clean
+	rm $(NAME)
 
 cleanlibs:
 	make clean -C $(LIBFT_DIR)

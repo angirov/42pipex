@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/09 20:24:53 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:25:06 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_init_pipex(t_pipex *pipex)
 
 void	ft_make_pipex(int argc, char **argv, char **envp, t_pipex *pipex)
 {
-	if (argc != 5)
+	if (argc < 5)
 		write(2, "Error: wrong input format\n", 26);
 	ft_init_pipex(pipex);
 	pipex->cmd_num = argc - 3;

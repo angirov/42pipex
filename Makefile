@@ -5,10 +5,10 @@ HEADERS = $(SRCS_DIR)pipex.h
 
 # ========== mandatory ===========
 
-SRCS_FILES = 	main.c \
-				init_pipex.c \
-				free_close.c \
-				child.c
+SRCS_FILES = 	pipex_app.c \
+				pipex_engine.c \
+				pipex_child.c \
+				pipex_destroy.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 

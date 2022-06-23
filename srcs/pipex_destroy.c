@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_close.c                                       :+:      :+:    :+:   */
+/*   pipex_destroy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:06:42 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/08 21:21:16 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:36:22 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,35 +85,3 @@ void	ft_free_newargvs(t_pipex *pipex)
 		free(pipex->newargvs);
 	}
 }
-
-/*	This function frees double char arrays making
-	use of the fact that they were inited with
-	a NULL at the end in ft_make_newargv */
-
-// void	ft_free_split_nullterm(char **arr)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (arr[i])
-// 	{
-// 		free(arr[i]);
-// 		i++;
-// 	}
-// 	free(arr);
-// }
-
-/*	Do not forget that some of double char arrays 
-	may have a the last slot pointing to NULL */
-// void	ft_free_split(char **arr, int n)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i++ < n)
-// 	{
-// 		free(arr[i]);
-// 		i++;
-// 	}
-// 	free(arr);
-// }

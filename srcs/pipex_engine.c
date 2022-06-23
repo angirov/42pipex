@@ -1,42 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_pipex.c                                       :+:      :+:    :+:   */
+/*   pipex_engine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 12:00:36 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/09 20:36:42 by vangirov         ###   ########.fr       */
+/*   Created: 2022/06/06 12:02:24 by vangirov          #+#    #+#             */
+/*   Updated: 2022/06/23 11:39:43 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h" 
 
+void	ft_pipex(t_pipex *pipex)
+{
+	int		pid;
+	int		cmd_i;
+
+	ft_make_pipex(pipex);
+	cmd_i = 0;
+	while (cmd_i < pipex->cmd_num)
+	{
+		pid = fork();
+		if (pid == -1)
+			ft_exit(400 + 1, pipex);
+		if (pid == 0)
+			ft_child(cmd_i, pipex);
+		cmd_i++;
+	}
+	wait(NULL);
+	ft_clean_pipex(pipex);
+}
+
 /*	This function finds the line starting with "PATH".
 	Then it passes the pointer to the ponter to the first
 	value path variable (after "PATH=" i.e. + 5 */
 
-void	ft_make_paths(char **envp, t_pipex *pipex)
+void	ft_make_pipex(t_pipex *pipex)
 {
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	if (ft_strncmp("PATH", *envp, 4))
-		ft_exit(50, pipex);
-	pipex->paths = ft_split(*envp + 5, ':');
+	pipex->fd1 = open(pipex->infile_name, O_RDONLY);
+	if (pipex->fd1 < 0)
+		ft_exit(100 + 1, pipex);
+	pipex->fd2 = open(pipex->outfile_name, O_CREAT | O_WRONLY, 0777);
+	if (pipex->fd2 < 0)
+		ft_exit(100 + 2, pipex);
+	ft_make_paths(pipex);
+	ft_make_pipes(pipex);
 }
 
-void	ft_make_newarvs(char **argv, t_pipex *pipex)
-{
-	int	i;
-
-	pipex->newargvs = malloc(sizeof(char **) * pipex->cmd_num);
-	i = 0;
-	while (i < pipex->cmd_num)
-	{
-		pipex->newargvs[i] = ft_split(argv[i + 2], ' ');
-		i++;
-	}
-}
 
 void	ft_make_pipes(t_pipex *pipex)
 {
@@ -79,18 +90,3 @@ int	ft_find_path(int cmd_i, t_pipex *pipex)
 	}
 	return (0);
 }
-
-// char	**ft_make_newargv(char *arg_string)
-// {
-// 	int		newargc;
-// 	char	*newstring;
-// 	char	**newargv;
-
-// 	newargc = ft_toknum(arg_string, ' ');
-// 	newstring = ft_strjoin(arg_string, " NULL");
-// 	newargv = ft_split(newstring, ' ');
-// 	free(newstring);
-// 	free(newargv[newargc]);
-// 	newargv[newargc] = NULL;
-// 	return (newargv);
-// }
